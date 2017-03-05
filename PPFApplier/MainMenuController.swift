@@ -35,8 +35,20 @@ class MainMenuController: NSWindowController {
         }
     }
     @IBAction func apply(_ sender: NSButton) {
-        ApplyPatch(UnsafeMutablePointer(mutating: self.textFieldIso.stringValue),
-                   UnsafeMutablePointer(mutating: self.textFieldPpf.stringValue));
+        let result = ApplyPatch(UnsafeMutablePointer(mutating: self.textFieldIso.stringValue),
+                                UnsafeMutablePointer(mutating: self.textFieldPpf.stringValue));
+        
+        let alert = NSAlert();
+        alert.addButton(withTitle: "OK");
+        alert.messageText = result == 0 ? "PPF applied successfully!" : "An error ocurred";
+        alert.runModal();
+        
+        resetView();
+    }
+    
+    func resetView() {
+        self.textFieldIso.stringValue = "";
+        self.textFieldPpf.stringValue = "";
     }
     
     func createPanel() -> NSOpenPanel {

@@ -85,26 +85,27 @@ unsigned char ppfmem[512];
 int	PPFVersion(FILE *ppf);
 int	OpenFiles(char* file1, char* file2);
 int	ShowFileId(FILE *ppf, int ppfver);
-void	ApplyPPF1Patch(FILE *ppf, FILE *bin);
-void	ApplyPPF2Patch(FILE *ppf, FILE *bin);
-void	ApplyPPF3Patch(FILE *ppf, FILE *bin, char mode);
+int	ApplyPPF1Patch(FILE *ppf, FILE *bin);
+int	ApplyPPF2Patch(FILE *ppf, FILE *bin);
+int	ApplyPPF3Patch(FILE *ppf, FILE *bin, char mode);
 
 int ApplyPatch(char *isoPath, char *ppfPath) {
+    int result = 1;
     if(OpenFiles(isoPath, ppfPath)) return(0);
     int x=PPFVersion(ppf);
     if(x){
-        if(x==1){ ApplyPPF1Patch(ppf, bin); }
-        if(x==2){ ApplyPPF2Patch(ppf, bin); }
-        if(x==3){ ApplyPPF3Patch(ppf, bin, APPLY); }
+        if(x==1){ result = ApplyPPF1Patch(ppf, bin); }
+        if(x==2){ result = ApplyPPF2Patch(ppf, bin); }
+        if(x==3){ result = ApplyPPF3Patch(ppf, bin, APPLY); }
     }
     fclose(bin);
     fclose(ppf);
-    return(0);
+    return(result);
 }
 
 //////////////////////////////////////////////////////////////////////
 // Applies a PPF1.0 patch.
-void ApplyPPF1Patch(FILE *ppf, FILE *bin){
+int ApplyPPF1Patch(FILE *ppf, FILE *bin){
 	char desc[50];
 	int pos;
 	unsigned int count, seekpos;
@@ -139,12 +140,12 @@ void ApplyPPF1Patch(FILE *ppf, FILE *bin){
 	} while(count!=0);
 
 	printf("successful.\n");
-
+    return 0;
 }
 
 //////////////////////////////////////////////////////////////////////
 // Applies a PPF2.0 patch.
-void ApplyPPF2Patch(FILE *ppf, FILE *bin){
+int ApplyPPF2Patch(FILE *ppf, FILE *bin){
 		char desc[50], in;
 		unsigned int binlen, obinlen, count, seekpos;
 		int idlen, pos;
@@ -170,7 +171,7 @@ void ApplyPPF2Patch(FILE *ppf, FILE *bin){
 			in=getc(stdin);
 			if(in!='y'&&in!='Y'){
 				printf("Aborted...\n");
-				return;
+				return 1;
 			}
 		}
 
@@ -194,7 +195,7 @@ void ApplyPPF2Patch(FILE *ppf, FILE *bin){
 			in=getc(stdin);
 			if(in!='y'&&in!='Y'){
 				printf("Aborted...\n");
-				return;
+				return 1;
 			}
 		}
 
@@ -220,10 +221,11 @@ void ApplyPPF2Patch(FILE *ppf, FILE *bin){
         } while(count!=0);
 
 		printf("successful.\n");
+        return 0;
 }
 //////////////////////////////////////////////////////////////////////
 // Applies a PPF3.0 patch.
-void ApplyPPF3Patch(FILE *ppf, FILE *bin, char mode){
+int ApplyPPF3Patch(FILE *ppf, FILE *bin, char mode){
 	char desc[50], imagetype=0, in;
         unsigned char	undo=0, blockcheck=0;
 	int idlen;
@@ -251,7 +253,7 @@ void ApplyPPF3Patch(FILE *ppf, FILE *bin, char mode){
 	if(mode==UNDO){
 		if(!undo){
 			printf("Error: no undo data available\n");
-			return;
+			return 1;
 		}
 	}
 
@@ -272,7 +274,7 @@ void ApplyPPF3Patch(FILE *ppf, FILE *bin, char mode){
 			in=getc(stdin);
 			if(in!='y'&&in!='Y'){
 				printf("Aborted...\n");
-				return;
+				return 1;
 			}
 		}
 	}
@@ -320,7 +322,7 @@ void ApplyPPF3Patch(FILE *ppf, FILE *bin, char mode){
 	} while(count!=0);
 
 		printf("successful.\n");
-
+    return 0;
 }
 
 
