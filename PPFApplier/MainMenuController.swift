@@ -10,19 +10,41 @@ import Cocoa
 
 class MainMenuController: NSWindowController {
     
+    @IBOutlet weak var textFieldIso: NSTextField!
+    @IBOutlet weak var textFieldPpf: NSTextField!
+    
     override func awakeFromNib() {
         super.windowDidLoad()
     }
 
     @IBAction func findIso(_ sender: NSButton) {
-        NSLog("Pressed find iso");
+        let panel = createPanel();
+        panel.begin { (result) -> Void in
+            if result == NSFileHandlingPanelOKButton {
+                self.textFieldIso.stringValue = panel.urls.first?.path ?? "";
+            }
+        }
     }
     
     @IBAction func findPpf(_ sender: NSButton) {
-        NSLog("Pressed find ppf");
+        let panel = createPanel();
+        panel.begin { (result) -> Void in
+            if result == NSFileHandlingPanelOKButton {
+                self.textFieldPpf.stringValue = panel.urls.first?.path ?? "";
+            }
+        }
     }
     @IBAction func apply(_ sender: NSButton) {
-        NSLog("Pressed apply");
-//        ApplyPatch("", "");
+        ApplyPatch(UnsafeMutablePointer(mutating: self.textFieldIso.stringValue),
+                   UnsafeMutablePointer(mutating: self.textFieldPpf.stringValue));
+    }
+    
+    func createPanel() -> NSOpenPanel {
+        let openPanel = NSOpenPanel()
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        return openPanel;
     }
 }

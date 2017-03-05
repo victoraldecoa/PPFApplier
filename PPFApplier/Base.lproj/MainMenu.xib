@@ -20,6 +20,8 @@
         </customObject>
         <customObject id="uVH-Dz-PZh" userLabel="Controller" customClass="MainMenuController" customModule="PPFApplier" customModuleProvider="target">
             <connections>
+                <outlet property="textFieldIso" destination="0uk-fX-cvS" id="jLZ-22-nrt"/>
+                <outlet property="textFieldPpf" destination="sSg-Dy-sJb" id="aTd-hM-3ho"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="Bzx-Ce-aV8"/>
             </connections>
         </customObject>
