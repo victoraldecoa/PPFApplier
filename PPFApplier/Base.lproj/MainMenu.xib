@@ -18,6 +18,11 @@
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
+        <customObject id="uVH-Dz-PZh" userLabel="Controller" customClass="MainMenuController" customModule="PPFApplier" customModuleProvider="target">
+            <connections>
+                <outlet property="window" destination="QvC-M9-y7g" id="Bzx-Ce-aV8"/>
+            </connections>
+        </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
@@ -723,6 +728,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="findIso:" target="uVH-Dz-PZh" id="Pky-UD-fSd"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vg4-0T-20E">
                         <rect key="frame" x="227" y="54" width="81" height="32"/>
@@ -731,6 +739,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="findPpf:" target="uVH-Dz-PZh" id="33S-6h-dJP"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kLa-rX-Tsq">
                         <rect key="frame" x="121" y="13" width="81" height="32"/>
@@ -739,6 +750,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="apply:" target="uVH-Dz-PZh" id="EGd-gs-ODM"/>
+                        </connections>
                     </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0uk-fX-cvS">
                         <rect key="frame" x="64" y="99" width="161" height="22"/>
@@ -751,6 +765,9 @@
                     </textField>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="uVH-Dz-PZh" id="t57-zQ-8ya"/>
+            </connections>
             <point key="canvasLocation" x="60" y="-217"/>
         </window>
     </objects>
